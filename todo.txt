@@ -1,0 +1,2 @@
+-- Slash command to add ?
+display avatar of a mentionned user
