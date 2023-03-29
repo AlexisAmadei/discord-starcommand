@@ -1,11 +1,20 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { execute } = require('./ping');
 
-ModalSubmitFields.export = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('user')
         .setDescription('Get user info'),
     async execute(interaction) {
-        await interaction.reply('This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.')
+        const userName = interaction.user.username;
+        const userId = interaction.user.id;
+        const member = interaction.member;
+
+        const joinedDate = member.joinedAt;
+        const joinedDay = joinedDate.toLocaleDateString('fr-FR', { day: 'numeric' });
+        const joinedMonth = joinedDate.toLocaleDateString('fr-FR', { month: 'long' });
+        const joinedYear = joinedDate.toLocaleDateString('fr-FR', { year: 'numeric' });
+
+        const response = `*User Name:* **${userName}** \n` + `*User ID:* **${userId}** \n` + `You joined this server on **${joinedDay} ${joinedMonth} , ${joinedYear}**.`;
+        await interaction.reply(response);
     },
 }
