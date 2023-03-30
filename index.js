@@ -3,10 +3,13 @@ const path = require('node:path');
 
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const { execute } = require('./commands/fun/ascii');
 const client = new Client({ intents: GatewayIntentBits.Guilds });
 
 client.once(Events.ClientReady, c => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
+    const channel = client.channels.cache.find(channel => channel.name === 'test-bot');
+    channel.send('Hey I am live !!');
 });
 
 client.commands = new Collection();
@@ -47,6 +50,12 @@ client.on(Events.InteractionCreate, async interaction => {
     }
     // log
     console.log(`--> New interaction by ${interaction.user.username} with ${interaction.commandName}`);
+});
+
+client.on(Events.ShardDisconnect, () => {
+    const channel = client.channels.cache.find(channel => channel.name === 'test-bot');
+    channel.send('Going to sleep.');
+    console.log('Disconnected!');
 });
 
 client.login(token);
