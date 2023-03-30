@@ -1,2 +1,4 @@
 -- Slash command to add ?
-display avatar of a mentionned user
+create a channel on demand
+hub voice channel
+delete messages
