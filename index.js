@@ -12,8 +12,6 @@ client.once(Events.ClientReady, c => {
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
-const commandsPath = path.join(__dirname, 'commands');
-// const commandsFile = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 const commandFolder = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolder) {
@@ -47,7 +45,8 @@ client.on(Events.InteractionCreate, async interaction => {
             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
         }
     }
-    console.log('\nNew interaction recorded:\n' + interaction.user.username + '\n' + interaction.commandName + '\n');
+    // log
+    console.log(`--> New interaction by ${interaction.user.username} with ${interaction.commandName}`);
 });
 
 client.login(token);
