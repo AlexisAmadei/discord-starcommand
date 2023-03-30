@@ -9,7 +9,7 @@ module.exports = {
         const day = currentDate.toLocaleDateString('en-US', { day: 'numeric' });
         const month = currentDate.toLocaleDateString('en-US', { month: 'long' });
         const year = currentDate.toLocaleDateString('en-US', { year: 'numeric' });
-        const response = 'Today is ' + month + ' ' + day + ', ' + year + '.';
+        const response = 'Today is ' + day + ' ' + month + ', ' + year + '.';
         await interaction.reply(response);
     },
 };
