@@ -14,7 +14,7 @@ module.exports = {
         const joinedMonth = joinedDate.toLocaleDateString('fr-FR', { month: 'long' });
         const joinedYear = joinedDate.toLocaleDateString('fr-FR', { year: 'numeric' });
 
-        const response = `*User Name:* **${userName}** \n` + `*User ID:* **${userId}** \n` + `You joined this server on **${joinedDay} ${joinedMonth} , ${joinedYear}**.`;
+        const response = `*User Name:* **${userName}** \n` + `*User ID:* **${userId}** \n` + `You joined this server the **${joinedDay} ${joinedMonth} ${joinedYear}**.`;
         await interaction.reply(response);
     },
 }
