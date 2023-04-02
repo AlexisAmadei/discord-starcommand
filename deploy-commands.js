@@ -21,7 +21,6 @@ function readCommands(dir) {
 }
 readCommands(commandsPath);
 const rest = new REST({ version: '10' }).setToken(token);
-
 (async () => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
