@@ -50,10 +50,4 @@ client.on(Events.InteractionCreate, async interaction => {
     console.log(`--> Nouvelle interraction de ${interaction.user.username} avec (/) ${interaction.commandName}`);
 });
 
-// client.on(Events.ShardDisconnect, () => {
-//     const channel = client.channels.cache.find(channel => channel.name === 'test-bot');
-//     channel.send('Going to sleep.');
-//     console.log('Disconnected!');
-// });
-
 client.login(token);
