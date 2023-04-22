@@ -1,16 +1,12 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token } = require('./config.json');
+
 const client = new Client({ intents: GatewayIntentBits.Guilds });
 
-client.once(Events.ClientReady, c => {
-    console.log(`Ready! Logged in as ${c.user.tag}`);
-    const channel = client.channels.cache.find(channel => channel.name === 'test-bot');
-    // channel.send('Hey I am live !!');
-});
-
+module.exports = client;
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
@@ -34,7 +30,7 @@ client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
     if (!command) {
-        console.error('Aucun commande avec ${interaction.commandName} trouvée.');
+        console.error(`Aucun commande avec ${interaction.commandName} trouvée.`);
         return;
     }
     try {
@@ -51,3 +47,9 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.login(token);
+
+client.on(Events.ClientReady, () => {
+    console.log(`Ready! Logged in as ${client.user.tag}`);
+    client.user.setActivity("ce qu'il se passe..", { type: ActivityType.Watching });
+    console.log(`Activity set to "Hello World !"`);
+});
