@@ -23,12 +23,12 @@ readCommands(commandsPath);
 const rest = new REST({ version: '10' }).setToken(token);
 (async () => {
   try {
-    console.log(`Started refreshing ${commands.length} application (/) commands.`);
+    console.log(`Raffraichissement de  ${commands.length} (/) commandes.`);
     const data = await rest.put(
       Routes.applicationGuildCommands(clientId, guildId),
       { body: commands },
     );
-    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    console.log(`Succès de ${data.length} (/) commandes.`);
   } catch (error) {
     console.error(error);
   }

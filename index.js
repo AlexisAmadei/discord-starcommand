@@ -34,7 +34,7 @@ client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
     if (!command) {
-        console.error('No command matching ${interaction.commandName} was found.');
+        console.error('Aucun commande avec ${interaction.commandName} trouvée.');
         return;
     }
     try {
@@ -42,13 +42,12 @@ client.on(Events.InteractionCreate, async interaction => {
     } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+            await interaction.followUp({ content: 'Erreur avec la commande', ephemeral: true });
         } else {
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+            await interaction.reply({ content: 'Erreur avec la commande', ephemeral: true });
         }
     }
-    // log
-    console.log(`--> New interaction by ${interaction.user.username} with ${interaction.commandName}`);
+    console.log(`--> Nouvelle interraction de ${interaction.user.username} avec (/) ${interaction.commandName}`);
 });
 
 // client.on(Events.ShardDisconnect, () => {

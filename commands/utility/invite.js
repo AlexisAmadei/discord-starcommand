@@ -7,7 +7,7 @@ module.exports = {
 	async execute(interaction) {
 		const permissions = interaction.channel.permissionsFor(interaction.client.user);
 		if (!permissions.has('CREATE_INSTANT_INVITE')) {
-			return interaction.reply('I do not have permission to create an invite link in this channel');
+			return interaction.reply("Je n'ai pas la permission de créer des invitations dans ce channel");
 		}
 
 		const invite = await interaction.channel.createInvite({
