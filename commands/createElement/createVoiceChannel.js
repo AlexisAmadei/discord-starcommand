@@ -2,24 +2,26 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('createtextchannel')
-    .setDescription('Create a text channel')
+    .setName('create-voicechannel')
+    .setDescription('Create a voice channel')
     .addStringOption(option =>
       option.setName('channel-name')
-        .setDescription('The name of the element.')
+        .setDescription('The name of the channel.')
         .setRequired(true))
     .addStringOption(option =>
-      option.setName('topic')
-        .setDescription('The topic of the element.')
+      option.setName('userlimit')
+        .setDescription('The user limit of the channel.')
         .setRequired(false)),
   async execute(interaction) {
     const guild = interaction.guild;
     let elementName = interaction.options.getString('channel-name');
-    elementName = elementName.toLowerCase().replace(/[^a-zA-Z\s]+/g, '').replace(/\s+/g, '-');
+    const userLimit = interaction.options.getString('userlimit');
     const channel = await guild.channels.create({
       name: elementName,
-      type: 0,
+      type: 2,
+      userLimit: userLimit,
+      bitrate: 64000,
     });
-    await interaction.reply(`Created channel ${channel}`);
+    await interaction.reply('Created channel ' + elementName);
   }
 }

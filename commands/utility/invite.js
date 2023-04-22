@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('createinvite')
+		.setName('create-invite')
 		.setDescription('Creates an invite link for the server.'),
 	async execute(interaction) {
 		const permissions = interaction.channel.permissionsFor(interaction.client.user);

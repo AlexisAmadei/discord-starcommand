@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('createcategory')
+    .setName('create-category')
     .setDescription('Create a category')
     .addStringOption(option =>
       option.setName('category-name')
