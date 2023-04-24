@@ -1,7 +1,5 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v10');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token } = require('./config.json');
 
@@ -38,6 +36,8 @@ for (const folder of commandFolder) {
 }
 
 client.login(token);
+
+client.on('error', console.error);
 
 client.once(Events.ClientReady, () => {
     const activityStatus = "ce qu'il se passe.."

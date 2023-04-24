@@ -1,7 +1,5 @@
-const client = require('../../index.js');
-const { YOUTUBE_API_KEY } = require('../../config.json');
-
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { EmbedBuilder } = require('discord.js');
 const { joinVoiceChannel, createAudioPlayer, createAudioResource } = require('@discordjs/voice')
 const ytdl = require('ytdl-core');
 
@@ -32,6 +30,30 @@ module.exports = {
     });
     connection.subscribe(player);
     player.play(ressource);
-    await interaction.reply('Playing this shit');
+    player.on('error', error => {
+      console.error(`XXX => Error: ${error.message}${error.resource.metadata ? ` with resource ${error.resource.metadata.title}` : ''}`);
+      player.stop();
+      connection.disconnect();
+    });
+    connection.on('disconnect', () => {
+      console.log('#> Connection disconnected');
+    });
+    player.on('stateChange', (oldState, newState) => {
+      console.log(`#> Audio player transitioned from ${oldState.status} to ${newState.status}`);
+    });
+
+    try {
+      const info = await ytdl.getBasicInfo(url);
+      const thumbnail = info.videoDetails.thumbnails[0].url;
+      const replyEmbed = new EmbedBuilder()
+        .setTitle('Playing this shit...')
+        .setDescription(`Playing ${url}`)
+        .setColor('DarkButNotBlack')
+        .setTimestamp()
+        .setThumbnail(thumbnail);
+      interaction.reply({ embeds: [replyEmbed] })
+    } catch(err) {
+      console.log(err);
+    }
   }
 };
