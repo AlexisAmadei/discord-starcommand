@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
+    cooldown: 60,
     data: new SlashCommandBuilder()
     .setName('avatar')
     .setDescription('Display the tagged user avatar.')

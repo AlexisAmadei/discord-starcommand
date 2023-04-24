@@ -1,6 +1,7 @@
 const { SlashCommandBuilder }= require('discord.js');
 
 module.exports = {
+    cooldown: 60,
     data: new SlashCommandBuilder()
         .setName('date')
         .setDescription('Replies with the current date and time.'),

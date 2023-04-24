@@ -1,10 +1,21 @@
 const fs = require('node:fs');
 const path = require('node:path');
-
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v10');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: GatewayIntentBits.Guilds });
+const handlePrefix = require('./prefix/handlePrefix.js');
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildVoiceStates,
+    ]
+});
 
 module.exports = client;
 client.commands = new Collection();
@@ -26,7 +37,34 @@ for (const folder of commandFolder) {
     }
 }
 
+// async function deployCommands(client) {
+//     const rest = new REST({ version: '10' }).setToken(token);
+//     const commandsData = Array.from(client.commands.values()).map(({ data }) => data.toJSON());
+//     try {
+//         await rest.put(Routes.applicationCommands(client.user.id), { body: commandsData });
+//         console.log('# Succès du déploiement des commandes.');
+//     } catch (error) {
+//         console.error('# Echec du déploiement des commandes:', error);
+//     }
+// }
+
+client.login(token);
+
+client.once(Events.ClientReady, () => {
+    const activityStatus = "ce qu'il se passe.."
+    console.log(`# Bot connecté sous => ${client.user.tag}`);
+    client.user.setActivity(activityStatus, { type: ActivityType.Watching });
+    console.log(`# Discord Status => "${activityStatus}"`);
+    client.channels.fetch
+    // deployCommands(client);
+});
+
+client.on('messageCreate', (message) => {
+    handlePrefix(message);
+});
+
 client.on(Events.InteractionCreate, async interaction => {
+    const logDate = new Date().toString().slice(4, 24);
     if (!interaction.isChatInputCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
     if (!command) {
@@ -43,13 +81,5 @@ client.on(Events.InteractionCreate, async interaction => {
             await interaction.reply({ content: 'Erreur avec la commande', ephemeral: true });
         }
     }
-    console.log(`--> Nouvelle interraction de ${interaction.user.username} avec (/) ${interaction.commandName}`);
-});
-
-client.login(token);
-
-client.on(Events.ClientReady, () => {
-    console.log(`Ready! Logged in as ${client.user.tag}`);
-    client.user.setActivity("ce qu'il se passe..", { type: ActivityType.Watching });
-    console.log(`Activity set to "Hello World !"`);
+    console.log(`# ${logDate} --> Nouvelle interraction de ${interaction.user.username} avec (/) ${interaction.commandName}`);
 });

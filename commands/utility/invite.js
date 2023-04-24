@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
+    cooldown: 60,
 	data: new SlashCommandBuilder()
 		.setName('create-invite')
 		.setDescription('Creates an invite link for the server.'),
