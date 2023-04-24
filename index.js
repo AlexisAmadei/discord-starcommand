@@ -37,17 +37,6 @@ for (const folder of commandFolder) {
     }
 }
 
-// async function deployCommands(client) {
-//     const rest = new REST({ version: '10' }).setToken(token);
-//     const commandsData = Array.from(client.commands.values()).map(({ data }) => data.toJSON());
-//     try {
-//         await rest.put(Routes.applicationCommands(client.user.id), { body: commandsData });
-//         console.log('# Succès du déploiement des commandes.');
-//     } catch (error) {
-//         console.error('# Echec du déploiement des commandes:', error);
-//     }
-// }
-
 client.login(token);
 
 client.once(Events.ClientReady, () => {
@@ -55,8 +44,6 @@ client.once(Events.ClientReady, () => {
     console.log(`# Bot connecté sous => ${client.user.tag}`);
     client.user.setActivity(activityStatus, { type: ActivityType.Watching });
     console.log(`# Discord Status => "${activityStatus}"`);
-    client.channels.fetch
-    // deployCommands(client);
 });
 
 client.on('messageCreate', (message) => {
