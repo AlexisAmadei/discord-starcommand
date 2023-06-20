@@ -15,10 +15,23 @@ module.exports = {
                 .setRequired(false)
         ),
     async execute(interaction) {
-        const user = interaction.options.getUser('user');
-        const reason = interaction.options.getString('reason');
-        const member = interaction.guild.members.cache.get(user.id);
-        member.kick(reason);
-        interaction.reply(`Kicked ${user.tag} for reason "${reason}"`);
+        if (interaction.user.id === '376774687209947136') {
+            const user = interaction.options.getUser('user');
+            const reason = interaction.options.getString('reason');
+            const member = interaction.guild.members.cache.get(user.id);
+            member.kick(reason);
+            interaction.reply(`Kicked ${user.tag} for reason "${reason}"`);
+        } else {
+            interaction.reply('You do not have permission to use this command!');
+        }
+        if (interaction.user.id === '376774687209947136') {
+            const user = interaction.options.getUser('user');
+            const reason = interaction.options.getString('reason');
+            const member = interaction.guild.members.cache.get(user.id);
+            member.kick(reason);
+            interaction.reply(`Kicked ${user.tag} for reason "${reason}"`);
+        } else {
+            interaction.reply('You do not have permission to use this command!');
+        }
     }
 }
