@@ -2,11 +2,11 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('@dis
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('kick')
+        .setName('ban')
         .setDescription('Ban a user')
         .addUserOption(option =>
             option.setName('target')
-                .setDescription('The user to kick')
+                .setDescription('The user to ban')
                 .setRequired(true)
         )
         .addStringOption(option =>
@@ -23,7 +23,7 @@ module.exports = {
             .setDescription(`You can't take action on ${user.username}.`)
             .setColor(0xc72c3b);
 
-        await member.kick({ reason });
+        await member.ban({ reason });
         const embed = new EmbedBuilder()
             .setDescription(`Successfuly banned ${user} with reason: ${reason}.`)
             .setColor(0x5fb041)
