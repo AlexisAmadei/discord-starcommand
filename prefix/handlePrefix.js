@@ -4,6 +4,7 @@ function handlePrefix(message) {
     let messageArray = [];
     let args = null;
 
+    messageArray = message.content.split(' ');
     if (message.content === 'ping' && message.author.id === myID) {
         console.log(`# ${new Date().toString().slice(4, 24)} --> Nouveau message de ${message.author.username} avec ping`);
         message.channel.send('pong !');

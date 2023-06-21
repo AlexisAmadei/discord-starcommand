@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('@dis
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('kick')
-        .setDescription('Ban a user')
+        .setDescription('Kick a user')
         .addUserOption(option =>
             option.setName('target')
                 .setDescription('The user to kick')
@@ -11,7 +11,7 @@ module.exports = {
         )
         .addStringOption(option =>
             option.setName('reason')
-                .setDescription('Reason for banning the user')
+                .setDescription('Reason for kicking the user')
                 .setRequired(false)
         ),
     async execute(interaction) {
