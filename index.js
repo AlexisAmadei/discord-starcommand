@@ -2,8 +2,24 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token } = require('./config.json');
-
+const readTerminal = require('./utils/readTerminal.js');
 const handlePrefix = require('./prefix/handlePrefix.js');
+
+readTerminal.on('line', (input) => {
+    if (input === 'quit') {
+        readTerminal.close();
+        process.exit(0);
+    }
+    if (input === 'clear') {
+        console.clear();
+        console.log('# Terminal cleared.');
+    }
+    if (input === 'help') {
+        console.log('Commandes disponibles: ');
+        console.log(' - "quit" pour quitter le bot.');
+        console.log(' - "clear" pour effacer le terminal.');
+    }
+});
 
 const client = new Client({
     intents: [
@@ -36,7 +52,6 @@ for (const folder of commandFolder) {
 }
 
 client.login(token);
-
 client.on('error', console.error);
 
 client.once(Events.ClientReady, () => {
