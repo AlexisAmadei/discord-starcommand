@@ -1,41 +1,46 @@
 const { REST, Routes } = require('discord.js');
-const { clientId, token } = require('./config.json');
+const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
-const client = require('./index.js');
 
 const commands = [];
-const commandsPath = path.join(__dirname, 'commands');
+// Grab all the command folders from the commands directory you created earlier
+const foldersPath = path.join(__dirname, 'commands');
+const commandFolders = fs.readdirSync(foldersPath);
 
-function readCommands(dir) {
-  const files = fs.readdirSync(dir);
-  for (const file of files) {
-    const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      readCommands(filePath);
-    } else if (file.endsWith('.js')) {
-      const command = require(filePath);
-      commands.push(command.data.toJSON());
-    }
-  }
+for (const folder of commandFolders) {
+	// Grab all the command files from the commands directory you created earlier
+	const commandsPath = path.join(foldersPath, folder);
+	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+	// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
+	for (const file of commandFiles) {
+		const filePath = path.join(commandsPath, file);
+		const command = require(filePath);
+		if ('data' in command && 'execute' in command) {
+			commands.push(command.data.toJSON());
+		} else {
+			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		}
+	}
 }
-readCommands(commandsPath);
-const rest = new REST({ version: '10' }).setToken(token);
+
+// Construct and prepare an instance of the REST module
+const rest = new REST().setToken(token);
+
+// and deploy your commands!
 (async () => {
-  try {
-    console.log(`# Raffraichissement de  ${commands.length} (/) commandes...`);
+	try {
+		console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+		// Here, we deploy the commands to the global application (/) scope
     const data = await rest.put(
-      Routes.applicationCommands(clientId), { body: commands },
+      Routes.applicationCommands(clientId),
+      { body: commands },
     );
-    console.log(`# Succès de ${data.length} (/) commandes.`);
-  } catch (error) {
-    console.error(error);
-  }
 
-  // Delete all global commands
-  // rest.put(Routes.applicationGuildCommands(clientId), { body: [] })
-	// .then(() => console.log('Successfully deleted all guild commands.'))
-	// .catch(console.error);
-
+		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+	} catch (error) {
+		// And of course, make sure you catch and log any errors!
+		console.error(error);
+	}
 })();

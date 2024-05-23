@@ -6,18 +6,24 @@ const readTerminal = require('./utils/readTerminal.js');
 const handlePrefix = require('./prefix/handlePrefix.js');
 
 readTerminal.on('line', (input) => {
-    if (input === 'quit') {
+    if (input === 'q') {
         readTerminal.close();
         process.exit(0);
     }
-    if (input === 'clear') {
+    if (input === 'c') {
         console.clear();
         console.log('# Terminal cleared.');
     }
+    if (input === 'r') {
+        // redeploy commands
+        console.log('# Redéploiement des commandes..');
+        require('./deploy-commands.js');
+    }
     if (input === 'help') {
         console.log('Commandes disponibles: ');
-        console.log(' - "quit" pour quitter le bot.');
-        console.log(' - "clear" pour effacer le terminal.');
+        console.log(' - "q" pour quitter le bot.');
+        console.log(' - "c" pour effacer le terminal.');
+        console.log(' - "r" pour redéployer les commandes.');
     }
 });
 
