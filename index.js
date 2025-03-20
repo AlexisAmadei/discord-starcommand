@@ -1,7 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const config = require('./config.json');
+const token = config.token.trim();
+
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
-const { token } = require('./config.json');
 const readTerminal = require('./utils/readTerminal.js');
 const handlePrefix = require('./prefix/handlePrefix.js');
 
@@ -46,6 +48,7 @@ const commandFolder = fs.readdirSync(foldersPath);
 for (const folder of commandFolder) {
     const commandsPath = path.join(foldersPath, folder);
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
         const command = require(filePath);
