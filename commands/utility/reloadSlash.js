@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { cooldown } = require('./invite');
 
 module.exports = {
     cooldown: 300,
@@ -13,7 +12,6 @@ module.exports = {
         }
 
         console.log('Reloading slash commands...');
-        await interaction.reply('Reloading slash commands...');
-        
+        return interaction.reply('Reloading slash commands...');
     }
 };
