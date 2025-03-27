@@ -1,5 +1,0 @@
--- Slash command to add ?
-create a channel on demand
-hub voice channel
-delete messages
-restart and shutdown bot

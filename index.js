@@ -19,7 +19,7 @@ readTerminal.on('line', (input) => {
     if (input === 'r') {
         // redeploy commands
         console.log('# Redéploiement des commandes..');
-        require('./deploy-commands.js');
+        require('./utils/deploy-commands.js');
     }
     if (input === 'help') {
         console.log('Commandes disponibles: ');

@@ -1,6 +1,6 @@
 // filepath: c:\Users\alexi\Documents\GitHub\discord-app\test-token.js
 const { Client, GatewayIntentBits } = require('discord.js');
-const config = require('./config.json');
+const config = require('../config.json');
 const token = config.token.trim();
 
 const client = new Client({
