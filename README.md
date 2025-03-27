@@ -9,7 +9,7 @@ StarCommand is a Discord bot designed to enhance server management and provide f
 - **Fun Commands**: Engage users with interactive games like "Pierre Feuille Ciseaux" (Rock Paper Scissors).
 
 ## Slash Commands
-For a detailed list of all available slash commands, check out the [Slash Commands List](./CommandList.md).
+For a detailed list of all available slash commands, check out the [Slash Commands List](./documentation/CommandList.md).
 
 ## Installation
 
