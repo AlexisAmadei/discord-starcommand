@@ -64,9 +64,12 @@ client.login(token);
 client.on('error', console.error);
 
 client.once(Events.ClientReady, () => {
-    const activityStatus = "ce qu'il se passe.."
+    const activityStatus = "la population...";
     console.log(`# Bot connecté sous => ${client.user.tag}`);
-    client.user.setActivity(activityStatus, { type: ActivityType.Watching });
+    client.user.setPresence({
+        activities: [{ name: activityStatus, type: ActivityType.Watching }],
+        status: 'dnd',
+    });
     console.log(`# Discord Status => "${activityStatus}"`);
 });
 
